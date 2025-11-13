@@ -12,3 +12,8 @@ scrape:
   description: 
     - '.ui-pdp-description__content'
     - attr: 'text'
+
+  price:
+    - '.andes-money-amount__fraction'
+    - attr: 'text'
+  
