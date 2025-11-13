@@ -56,4 +56,5 @@ It combines **web scraping**, **data processing**, and **machine learning** to h
 sudo apt install rabbitmq-server -y
 sudo systemctl enable rabbitmq-server
 sudo systemctl start rabbitmq-server
-sudo rabbitmq-plugins enable rabbitmq_management```
+sudo rabbitmq-plugins enable rabbitmq_management
+```
