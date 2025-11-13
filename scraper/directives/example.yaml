@@ -1,8 +1,15 @@
 site: https://example.com
 
 scrape:
-  title: 'h1'
-  price: '.price'
-  description: 'p'
+  title:
+    - 'h1'
+    - attr: 'text'
   
-  
+  price: 
+    - '.price'
+    - attr: 'text'
+
+  description: 
+    - 'p'
+    - attr: 'text'
+

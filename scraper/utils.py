@@ -19,7 +19,18 @@ def grab_elements_by_directive(directive):
     elements_output = {}
 
     for key, value in dados['scrape'].items():
-        element = soup.select_one(value)
-        elements_output[key] = element
+        selector = value[0]
+        attr = value[1].get('attr')
+
+        element = soup.select_one(selector)
+
+        if element:
+            if attr == 'text':
+                elements_output[key] = element.get_text(strip=True)
+            else:
+                elements_output[key] = element.get(attr)
+        else:
+            elements_output[key] = None
+
 
     return elements_output

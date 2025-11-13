@@ -1,6 +1,14 @@
 site: https://pt.wikipedia.org/wiki/Arara-vermelha
 
 scrape:
-  title: '.mw-page-title-main'
-  note: '.hatnote'
-  description: 'p'
+  title: 
+    - '.mw-page-title-main'
+    - attr: 'text'
+
+  note: 
+    - '.hatnote'
+    - attr: 'text'
+
+  description: 
+    - 'p'
+    - attr: 'text'
