@@ -49,3 +49,11 @@ It combines **web scraping**, **data processing**, and **machine learning** to h
 - Integrate sentiment analysis from reviews  
 - Add alert system for price drops  
 - Build API marketplace for 3rd-party integrations  
+
+## Setup RabbitMQ
+
+``` sudo apt update
+sudo apt install rabbitmq-server -y
+sudo systemctl enable rabbitmq-server
+sudo systemctl start rabbitmq-server
+sudo rabbitmq-plugins enable rabbitmq_management```
