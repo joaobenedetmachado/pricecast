@@ -1,14 +1,15 @@
 # 🧠 PriceCast
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?logo=tensorflow)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?logo=tensorflow&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas)
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?logo=playwright)
 ![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-4B8BBE)
-![Redis](https://img.shields.io/badge/Redis-DC382D?logo=redis)
-![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?logo=mongodb)
+![Redis](https://img.shields.io/badge/Redis-DC382D?logo=redis&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?logo=mongodb&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?logo=react)
+![RabbitMQ](https://img.shields.io/badge/-RabbitMQ-FF6600?style=flat&logo=rabbitmq&logoColor=white)
 
 ---
 
