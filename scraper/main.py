@@ -1,6 +1,5 @@
-import utils
+import producer
+
 directive = '/home/joao/pricecast/scraper/directives/wikipedia.yaml'
 
-data = utils.grab_elements_by_directive(directive)
-
-print(data)
+data = producer.call_producer(directive)

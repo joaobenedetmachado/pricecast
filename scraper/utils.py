@@ -32,5 +32,4 @@ def grab_elements_by_directive(directive):
         else:
             elements_output[key] = None
 
-
     return elements_output
