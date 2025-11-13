@@ -1,19 +1,28 @@
 import requests
 from bs4 import BeautifulSoup
+import yaml
 
-url = "https://example.com"
+with open('/home/joao/pricecast/scraper/directives/example.yaml', 'r') as file:
+    dados = yaml.safe_load(file)
 
-response = requests.get(url)
+
+for key, value in dados['scrape'].items():
+    print(key, value)
+
+
+
+response = requests.get(dados['site'])
+
 response.raise_for_status()  
 
 soup = BeautifulSoup(response.text, "html.parser")
 
-finders = ['h1', 'p']
 
-elements_output = []
+elements_output = {}
 
-for selectors in finders:
-    element = soup.select_one(selectors)
-    elements_output.append(element)
+for key, value in dados['scrape'].items():
+    print(key, value)
+    element = soup.select_one(value)
+    elements_output[key] = element
 
 print(elements_output)

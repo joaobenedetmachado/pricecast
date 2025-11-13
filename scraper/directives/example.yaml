@@ -1,0 +1,8 @@
+site: https://example.com
+
+scrape:
+  title: 'h1'
+  price: '.price'
+  description: 'p'
+  
+  
