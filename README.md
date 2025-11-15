@@ -92,5 +92,6 @@ scrape:
 
 ### Run adding a arg in main.py
 
-``` python -m main '/home/joao/pricecast/scraper/directives/mercadolivre.yaml'
+``` 
+python -m main '/home/joao/pricecast/scraper/directives/mercadolivre.yaml'
 ```
