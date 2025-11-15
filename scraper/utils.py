@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import yaml
+from datetime import datetime
 
 
 def grab_elements_by_directive(directive):
@@ -33,5 +34,6 @@ def grab_elements_by_directive(directive):
             elements_output[key] = None
 
     elements_output["url"] = dados["site"]
+    elements_output["timestamp"] = datetime.now()
 
     return elements_output

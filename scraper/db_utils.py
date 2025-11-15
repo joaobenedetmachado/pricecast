@@ -18,9 +18,9 @@ collection.insert_one({"test": True})
 def save_scraped(data):
     try:
         result = collection.insert_one(data)
-        return True 
+        return "added to database" 
     except PyMongoError as e:
         print(f"Erro ao inserir no MongoDB: {e}")
-        return False
+        return "error in storage"
 
 
