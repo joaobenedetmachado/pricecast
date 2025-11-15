@@ -55,7 +55,8 @@ It combines **web scraping**, **data processing**, and **machine learning** to h
 
 ### Setup RabbitMQ
 
-``` sudo apt update
+``` 
+sudo apt update
 sudo apt install rabbitmq-server -y
 sudo systemctl enable rabbitmq-server
 sudo systemctl start rabbitmq-server
@@ -64,7 +65,8 @@ sudo rabbitmq-plugins enable rabbitmq_management
 
 ### Setup your MongoDB in the .env
 
-```MONGO_USERNAME=xxx
+```
+MONGO_USERNAME=xxx
 MONGO_PASSWORD=xxx
 MONGO_CLUSTER=xxx
 MONGO_DATABASE=xxx
@@ -74,7 +76,8 @@ MONGO_URI=xxx
 
 ### Set a directive YAML
 
-```site: https://example.com
+```
+site: https://example.com
 
 scrape:
   title:
