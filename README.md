@@ -51,11 +51,46 @@ It combines **web scraping**, **data processing**, and **machine learning** to h
 - Add alert system for price drops  
 - Build API marketplace for 3rd-party integrations  
 
-## Setup RabbitMQ
+## How to Run
+
+### Setup RabbitMQ
 
 ``` sudo apt update
 sudo apt install rabbitmq-server -y
 sudo systemctl enable rabbitmq-server
 sudo systemctl start rabbitmq-server
 sudo rabbitmq-plugins enable rabbitmq_management
+```
+
+### Setup your MongoDB in the .env
+
+```MONGO_USERNAME=xxx
+MONGO_PASSWORD=xxx
+MONGO_CLUSTER=xxx
+MONGO_DATABASE=xxx
+MONGO_COLLECTION=xxx
+MONGO_URI=xxx
+```
+
+### Set a directive YAML
+
+```site: https://example.com
+
+scrape:
+  title:
+    - 'h1'
+    - attr: 'text'
+  
+  price: 
+    - '.price'
+    - attr: 'text'
+
+  description: 
+    - 'p'
+    - attr: 'text'
+```
+
+### Run adding a arg in main.py
+
+``` python -m main '/home/joao/pricecast/scraper/directives/mercadolivre.yaml'
 ```
