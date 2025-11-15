@@ -32,4 +32,6 @@ def grab_elements_by_directive(directive):
         else:
             elements_output[key] = None
 
+    elements_output["url"] = dados["site"]
+
     return elements_output

@@ -1,10 +1,13 @@
 import pika
+import db_utils
 from utils import grab_elements_by_directive
 
 def callback(ch, method, properties, body):
     mensagem = body.decode()
     data = grab_elements_by_directive(mensagem)
-    print(data)
+    res = db_utils.save_scraped(data)
+    print(res)
+
     # salvar no csv ou algo assim
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
