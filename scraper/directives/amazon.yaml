@@ -1,0 +1,14 @@
+site: https://www.amazon.com.br/Rel%C3%B3gio-Masculino-Digital-Casio-AQ-230A-7DMQ/dp/B000LCV6KK/?_encoding=UTF8&pd_rd_w=2FSpp&content-id=amzn1.sym.3a9bd577-8081-416e-a6cc-40157669ee3a&pf_rd_p=3a9bd577-8081-416e-a6cc-40157669ee3a&pf_rd_r=X6FVD1558XHBBFGFJ1W6&pd_rd_wg=PAqQR&pd_rd_r=22d35b1d-f3a4-42cd-957a-de8057190bf1&ref_=pd_hp_d_atf_dealz_cs
+use: playwright
+scrape:
+  title: 
+    - '#productTitle'
+    - attr: 'text'
+
+  description: 
+    - '.a-unordered-list.a-vertical.a-spacing-small'
+    - attr: 'text'
+
+  price:
+    - '.a-price-whole'
+    - attr: 'text'

@@ -1,14 +1,16 @@
 import pika
 import db_utils
 from utils import grab_elements_by_directive
+import asyncio
+
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
 
 def callback(ch, method, properties, body):
     mensagem = body.decode()
-    data = grab_elements_by_directive(mensagem)
+    data = loop.run_until_complete(grab_elements_by_directive(mensagem))
     res = db_utils.save_scraped(data)
     print(res)
-
-    # salvar no csv ou algo assim
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()

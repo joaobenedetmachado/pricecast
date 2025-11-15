@@ -1,4 +1,5 @@
 site: https://pt.wikipedia.org/wiki/Arara-vermelha
+use: beautifulsoup
 
 scrape:
   title: 

@@ -1,5 +1,5 @@
 site: https://www.mercadolivre.com.br/deo-parfum-natura-essencial-sentir-masculino-100ml/p/MLB42149268#polycard_client=recommendations_home-deals&reco_backend=deals-model-odin&wid=MLB3910967033&reco_client=home-deals&reco_item_pos=3&reco_backend_type=low_level&reco_id=c7b3fc21-c4b7-4b2b-806c-659fb76b0872&sid=recos&c_id=/home/promotions-recommendations/element&c_uid=62ca4006-8289-4245-9ba0-58779a6c34c4
-
+use: beautifulsoup
 scrape:
   title: 
     - '.mw-page-title-main'

@@ -1,5 +1,5 @@
 site: https://example.com
-
+use: beautifulsoup
 scrape:
   title:
     - 'h1'
