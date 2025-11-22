@@ -26,7 +26,7 @@ def save_scraped(data):
         result = collection.insert_one(data)
         return "added to database" 
     except Exception as e:
-        print(f"Erro ao inserir no MongoDB: {e}")
+        print(f"error inserting in database: {e}")
         return "error in storage"
 
 
