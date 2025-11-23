@@ -2,6 +2,7 @@ import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from pymongo.errors import PyMongoError
+import re
 
 load_dotenv()
 
@@ -29,5 +30,7 @@ def save_scraped(data):
         print(f"error inserting in database: {e}")
         return "error in storage"
 
-
-
+def get_elements_by_site(name):
+    escaped = re.escape(name)
+    pattern = re.compile(rf"^{escaped}", re.IGNORECASE)
+    return list(collection.find({ "url": pattern }))
