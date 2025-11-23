@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 import yaml
 from datetime import datetime
 from playwright.async_api import async_playwright
+from bson.json_util import dumps
+import json
+import db_utils
+
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -75,3 +79,11 @@ def use_bs4(dados):
     elements_output["timestamp"] = datetime.now()
 
     return elements_output
+
+def get_scraped_by_sites_formated(name):
+    res = db_utils.get_elements_by_site("https://www.amazon"))
+    json_str = dumps(res)
+    data = json.loads(json_str)
+    return data
+    
+
