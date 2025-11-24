@@ -34,3 +34,8 @@ def get_elements_by_site(name):
     escaped = re.escape(name)
     pattern = re.compile(rf"^{escaped}", re.IGNORECASE)
     return list(collection.find({ "url": pattern }))
+
+def get_elements_by_part(name, part):
+    escaped = re.escape(name)
+    pattern = re.compile(rf"^{escaped}", re.IGNORECASE)
+    return list(collection.find({ f"{part}": pattern }))
