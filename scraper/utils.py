@@ -9,6 +9,7 @@ import db_utils
 import schedule
 import time
 from datetime import datetime, timedelta
+from pathlib import Path
 import producer
 
 headers = {
@@ -89,37 +90,47 @@ def get_scraped_by_sites_formated(name):
     data = json.loads(json_str)
     return data
 
-def run_schedule(directive, days):
-    next_run = datetime.now()
+def run_schedule(directives, interval_minutes=5, run_immediately=True):
+    if isinstance(directives, (str, Path)):
+        directives = [directives]
+
+    normalized_directives = []
+    for directive in directives:
+        path = Path(directive).expanduser()
+        if not path.exists():
+            raise FileNotFoundError(f"Diretiva não encontrada: {path}")
+        normalized_directives.append(path.resolve())
 
     def log(msg):
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
 
-    def job():
-        nonlocal next_run
-        now = datetime.now()
+    def make_job(directive_path):
+        directive_name = directive_path.stem
 
-        log("runnnig job...")
+        def job():
+            log(f"[{directive_name}] executando job...")
+            try:
+                producer.call_producer(str(directive_path))
+            except Exception as exc:
+                log(f"[{directive_name}] erro ao chamar producer: {exc}")
+                raise
+            log(f"[{directive_name}] job finalizado com sucesso.")
 
-        if now >= next_run:
-            log(f"calling producer w directive: {directive}")
-            producer.call_producer(directive)
+        return job
 
-            next_run = now + timedelta(days=days)
-            log(f"next execution is: {next_run}")
-        else:
-            log(f"its not time. next run: {next_run}")
-
-    log("schedule started.")
-    log(f"first execution: {next_run}")
-
-    schedule.every().day.at("13:57").do(job)
+    log("scheduler iniciado.")
+    for directive in normalized_directives:
+        job = make_job(directive)
+        schedule.every(interval_minutes).minutes.do(job)
+        log(f"[{directive.stem}] registrado para rodar a cada {interval_minutes} minuto(s).")
+        if run_immediately:
+            job()
 
     try:
         while True:
             schedule.run_pending()
             time.sleep(1)
     except KeyboardInterrupt:
-        log("exiting.")
+        log("Encerrando scheduler.")
 
 
