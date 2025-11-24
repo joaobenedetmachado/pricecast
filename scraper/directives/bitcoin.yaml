@@ -1,0 +1,12 @@
+site: https://coinmarketcap.com/currencies/bitcoin/
+
+use: beautifulsoup
+scrape:
+  coin: 
+    - '[data-role="coin-name"]'
+    - attr: 'text'
+
+  price:
+    - '[data-test="text-cdp-price-display"]'
+    - attr: 'text'
+  

@@ -1,6 +1,6 @@
 import producer
 import sys
-directive = '/home/joao/pricecast/scraper/directives/mercadolivre.yaml'
+directive = '/home/joao/pricecast/scraper/directives/coinmarketcap.yaml'
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
