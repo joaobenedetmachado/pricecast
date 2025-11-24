@@ -8,6 +8,7 @@ import json
 import db_utils
 import schedule
 import time
+import csv
 from datetime import datetime, timedelta
 from pathlib import Path
 import producer
@@ -134,3 +135,23 @@ def run_schedule(directives, interval_minutes=5, run_immediately=True):
         log("Encerrando scheduler.")
 
 
+def parse_coin_to_csv(data):
+    price_time = [
+    ["coin", "price", "timestamp"]
+    ]
+
+    for i in data: # formatting the data?
+        temp = []
+        temp.append(i['coin'])
+        temp.append(i['price'])
+        ts = i['timestamp']['$date'] / 1000  # ms → s
+        temp.append(datetime.fromtimestamp(ts))
+
+        price_time.append(temp)
+
+    print(price_time)
+
+    
+    with open(f"./data/{data[0]['coin']}.csv", "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerows(price_time)
