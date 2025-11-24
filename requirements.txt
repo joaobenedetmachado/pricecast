@@ -6,3 +6,4 @@ pymongo
 python-dotenv
 datetime
 playwright
+schedule

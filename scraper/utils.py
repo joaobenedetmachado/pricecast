@@ -6,6 +6,9 @@ from playwright.async_api import async_playwright
 from bson.json_util import dumps
 import json
 import db_utils
+import schedule
+import time
+from datetime import datetime, timedelta
 
 
 headers = {
@@ -81,9 +84,41 @@ def use_bs4(dados):
     return elements_output
 
 def get_scraped_by_sites_formated(name):
-    res = db_utils.get_elements_by_site("https://www.amazon"))
+    res = db_utils.get_elements_by_site("https://www.amazon")
     json_str = dumps(res)
     data = json.loads(json_str)
     return data
-    
+
+def run_schedule(directive, days):
+    next_run = datetime.now()
+
+    def log(msg):
+        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
+
+    def job():
+        nonlocal next_run
+        now = datetime.now()
+
+        log("runnnig job...")
+
+        if now >= next_run:
+            log(f"calling producer w directive: {directive}")
+            call_producer(directive)
+
+            next_run = now + timedelta(days=days)
+            log(f"next execution is: {next_run}")
+        else:
+            log(f"its not time. next run: {next_run}")
+
+    log("schedule started.")
+    log(f"first execution: {next_run}")
+
+    schedule.every().day.at("12:00").do(job)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+    except KeyboardInterrupt:
+        log("exiting.")
+
 
