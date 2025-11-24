@@ -9,7 +9,7 @@ import db_utils
 import schedule
 import time
 from datetime import datetime, timedelta
-
+import producer
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -103,7 +103,7 @@ def run_schedule(directive, days):
 
         if now >= next_run:
             log(f"calling producer w directive: {directive}")
-            call_producer(directive)
+            producer.call_producer(directive)
 
             next_run = now + timedelta(days=days)
             log(f"next execution is: {next_run}")
@@ -113,11 +113,12 @@ def run_schedule(directive, days):
     log("schedule started.")
     log(f"first execution: {next_run}")
 
-    schedule.every().day.at("12:00").do(job)
+    schedule.every().day.at("13:57").do(job)
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    try:
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
     except KeyboardInterrupt:
         log("exiting.")
 
