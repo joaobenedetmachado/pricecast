@@ -86,7 +86,7 @@ def use_bs4(dados):
     return elements_output
 
 def get_scraped_by_sites_formated(name):
-    res = db_utils.get_elements_by_site("https://www.amazon")
+    res = db_utils.get_elements_by_site(name)
     json_str = dumps(res)
     data = json.loads(json_str)
     return data
