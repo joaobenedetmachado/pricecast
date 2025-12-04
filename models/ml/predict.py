@@ -57,7 +57,9 @@ def return_predictions(data, days_to_predict=7, window_size=30):
         "PredictedPrice": predictions
     })
 
-    return df_pred.to_dict(orient="records")
+    df_pred["Date"] = df_pred["Date"].dt.strftime('%Y-%m-%d')
+
+    return df_pred.to_dict(orient="records")        
 
 
 if __name__ == "__main__":

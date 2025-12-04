@@ -1,4 +1,4 @@
-from ml.predict import return_predictions
+from models.ml.predict import return_predictions
 import pandas as pd
 csv_path = "/home/joao/pricecast/scraper/data/Bitcoinprice.csv"
 
