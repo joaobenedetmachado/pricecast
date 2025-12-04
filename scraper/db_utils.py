@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from pymongo.errors import PyMongoError
 import re
+from scraper.logger import log
 
 load_dotenv()
 
@@ -27,7 +28,7 @@ def save_scraped(data):
         result = collection.insert_one(data)
         return "added to database" 
     except Exception as e:
-        print(f"error inserting in database: {e}")
+        log(f"error inserting in database: {e}")
         return "error in storage"
 
 def get_elements_by_site(name):
@@ -39,7 +40,8 @@ def get_elements_by_part(name, part):
     try:
         escaped = re.escape(name)
         pattern = re.compile(rf"^{escaped}", re.IGNORECASE)
+        log(f"Getting elements by part: {part}")
         return list(collection.find({ f"{part}": pattern }))
     except Exception as e:
-        print(f"error getting elements by part: {e}")
+        log(f"error getting elements by part: {e}")
         return "error in storage"
