@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+import os
 
 def create_windowed_dataset(series, window_size):
     X, y = [], []
@@ -10,10 +11,10 @@ def create_windowed_dataset(series, window_size):
         y.append(series[i + window_size])
     return np.array(X), np.array(y)
 
-
-def return_predictions(data, days_to_predict=7, window_size=30):
+def return_predictions(data, days_to_predict=7, window_size=30, model_name=None):
     data = data.drop_duplicates()
-    data["timestamp"] = pd.to_datetime(data["timestamp"])
+    data["timestamp"] = pd.to_datetime(data["timestamp"], errors='coerce')
+    data = data.dropna(subset=["timestamp"])
 
     series = data["price"].values.astype(float).reshape(-1, 1)
 
@@ -23,18 +24,34 @@ def return_predictions(data, days_to_predict=7, window_size=30):
     X, y = create_windowed_dataset(series_scaled, window_size)
     X = X[..., np.newaxis]  
 
-    split = int(len(X) * 0.8)
-    X_train, X_test = X[:split], X[split:]
-    y_train, y_test = y[:split], y[split:]
+    model = None
+    model_path = None
 
+    if model_name:
+        model_filename = f"{model_name}_w{window_size}.keras"
+        model_path = os.path.join(os.path.dirname(__file__), "saved_models", model_filename)
+        
+        if os.path.exists(model_path):
+            print(f"Loading model from {model_path}...")
+            model = tf.keras.models.load_model(model_path)
 
-    model = tf.keras.Sequential([
-        tf.keras.layers.LSTM(64, return_sequences=True, input_shape=(window_size, 1)),
-        tf.keras.layers.LSTM(32),
-        tf.keras.layers.Dense(1)
-    ])
-    model.compile(optimizer="adam", loss="mse")
-    model.fit(X_train, y_train, epochs=20, validation_data=(X_test, y_test), verbose=1)
+    if model is None:
+        print("Training new model...")
+        split = int(len(X) * 0.8)
+        X_train, X_test = X[:split], X[split:]
+        y_train, y_test = y[:split], y[split:]
+
+        model = tf.keras.Sequential([
+            tf.keras.layers.LSTM(64, return_sequences=True, input_shape=(window_size, 1)),
+            tf.keras.layers.LSTM(32),
+            tf.keras.layers.Dense(1)
+        ])
+        model.compile(optimizer="adam", loss="mse")
+        model.fit(X_train, y_train, epochs=20, validation_data=(X_test, y_test), verbose=1)
+
+        if model_path:
+            print(f"Saving model to {model_path}...")
+            model.save(model_path)
 
 
     last_window = series_scaled[-window_size:].tolist()

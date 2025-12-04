@@ -6,22 +6,31 @@ import tensorflow_decision_forests as tfdf
 from sklearn.model_selection import train_test_split
 import numpy as np
 
+def format_data_by_csv(csv_path):
+    data = pd.read_csv(csv_path)
 
-
-
-def format_data_by_csv(csv):
-    data = pd.read_csv(csv)
-
+    # Normalize price
     data['price'] = (
         data['price']
         .str.replace('$', '', regex=False)
         .str.replace(',', '', regex=False)
         .astype(float)
     )
-    data = data[data['timestamp'].str.match(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+$')]
-    data["timestamp"] = pd.to_datetime(data["timestamp"], format="%Y-%m-%d %H:%M:%S.%f")
+
+    # Try parsing timestamps with multiple strategies
+    def try_parse(x):
+        try:
+            return pd.to_datetime(x)  # automatic, handles most cases
+        except:
+            return pd.NaT
+
+    data["timestamp"] = data["timestamp"].apply(try_parse)
+
+    # Remove invalid timestamp rows
+    data = data.dropna(subset=["timestamp"])
 
     return data
+
 
 def prepare_data(df):
     df["Year"] = df["timestamp"].dt.year
