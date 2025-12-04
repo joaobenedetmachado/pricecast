@@ -1,6 +1,6 @@
 from ml.predict import return_predictions
 import pandas as pd
-csv_path = "/home/joao/pricecast/scraper/data/Ethereumprice.csv"
+csv_path = "/home/joao/pricecast/scraper/data/Bitcoinprice.csv"
 
 def predict_directive(csv_path, days, window_size):
     df = pd.read_csv(csv_path)
