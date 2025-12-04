@@ -5,6 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pathlib import Path
 from models.main import predict_directive
+import uuid
+import shutil
+from fastapi import HTTPException
 
 app = FastAPI()
 
@@ -38,3 +41,27 @@ async def predict(csv_path: str, days: int, window_size: int, model: str):
             return JSONResponse({"error": "Model not found"}, status_code=404)
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
+
+@app.post("/upload")
+async def upload_file(file: UploadFile = File(...)):
+    try:
+        if not file.filename.lower().endswith(".csv"):
+            raise HTTPException(status_code=400, detail="Only .csv files are allowed")
+
+        save_dir = Path("/home/joao/pricecast/scraper/data/")
+        save_dir.mkdir(parents=True, exist_ok=True)
+
+        unique_name = f"{uuid.uuid4()}_{file.filename}"
+        save_path = save_dir / unique_name
+
+        with save_path.open("wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+        return JSONResponse({
+            "message": "File uploaded successfully",
+            "filename": unique_name,
+            "path": str(save_path)
+        })
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
+

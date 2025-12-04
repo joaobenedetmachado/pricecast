@@ -14,6 +14,7 @@ data = json.loads(json_str)
 utils.parse_coin_to_csv(data)
 
 
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         res = db_utils.get_elements_by_part(sys.argv[1], "coin")
