@@ -5,13 +5,13 @@ from datetime import datetime
 from playwright.async_api import async_playwright
 from bson.json_util import dumps
 import json
-import db_utils
+import scraper.db_utils
 import schedule
 import time
 import csv
 from datetime import datetime, timedelta
 from pathlib import Path
-import producer
+import scraper.producer
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -136,22 +136,25 @@ def run_schedule(directives, interval_minutes=5, run_immediately=True):
 
 
 def parse_coin_to_csv(data):
-    price_time = [
-    ["coin", "price", "timestamp"]
-    ]
+    try:
+        price_time = [
+        ["coin", "price", "timestamp"]
+        ]
 
-    for i in data: # formatting the data?
-        temp = []
-        temp.append(i['coin'])
-        temp.append(i['price'])
-        ts = i['timestamp']['$date'] / 1000  # ms → s
-        temp.append(datetime.fromtimestamp(ts))
+        for i in data: # formatting the data?
+            temp = []
+            temp.append(i['coin'])
+            temp.append(i['price'])
+            ts = i['timestamp']['$date'] / 1000  # ms → s
+            temp.append(datetime.fromtimestamp(ts))
 
-        price_time.append(temp)
+            price_time.append(temp)
 
-    print(price_time)
+        print(price_time)
 
-    
-    with open(f"./data/{data[0]['coin']}.csv", "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerows(price_time)
+        
+        with open(f"./data/{data[0]['coin']}.csv", "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerows(price_time)
+    except Exception as e:
+        print(f"Erro ao salvar dados: {e}")

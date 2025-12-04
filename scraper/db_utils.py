@@ -36,6 +36,10 @@ def get_elements_by_site(name):
     return list(collection.find({ "url": pattern }))
 
 def get_elements_by_part(name, part):
-    escaped = re.escape(name)
-    pattern = re.compile(rf"^{escaped}", re.IGNORECASE)
-    return list(collection.find({ f"{part}": pattern }))
+    try:
+        escaped = re.escape(name)
+        pattern = re.compile(rf"^{escaped}", re.IGNORECASE)
+        return list(collection.find({ f"{part}": pattern }))
+    except Exception as e:
+        print(f"error getting elements by part: {e}")
+        return "error in storage"
