@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 210 100% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 210 100% 45%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Background colors - mais sóbrio, menos saturado */
+    --background: 222 15% 8%;
+    --foreground: 210 20% 95%;
+
+    /* Card colors - cinza escuro profissional */
+    --card: 222 15% 11%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 222 15% 11%;
+    --popover-foreground: 210 20% 95%;
+
+    /* Primary - azul corporativo mais sóbrio */
+    --primary: 210 80% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - cinza médio */
+    --secondary: 217 15% 20%;
+    --secondary-foreground: 210 20% 95%;
+
+    /* Muted - tons de cinza */
+    --muted: 217 15% 18%;
+    --muted-foreground: 215 15% 60%;
+
+    /* Accent - cinza com leve toque de azul */
+    --accent: 217 15% 22%;
+    --accent-foreground: 210 20% 95%;
+
+    /* Destructive - vermelho mais sóbrio */
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 210 20% 95%;
+
+    /* Borders - cinza escuro sutil */
+    --border: 217 15% 20%;
+    --input: 217 15% 20%;
+
+    /* Ring - azul corporativo */
+    --ring: 210 80% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  code,
+  pre {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+}
