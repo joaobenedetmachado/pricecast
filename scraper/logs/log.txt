@@ -89,3 +89,13 @@
 2025-12-05 09:54:39.680350 - Training new model with: epochs=6, batch_size=32, lr=0.001, optimizer=adam, loss=mse, dropout=0.2
 2025-12-05 09:55:12.398369 - Saving model to /home/joao/pricecast/models/ml/saved_models/Ethereumprice_w120_e6_b32.keras...
 2025-12-05 09:55:12.869744 - Prediction result: [{'Date': '2025-11-29', 'PredictedPrice': 3048.70751953125}, {'Date': '2025-11-30', 'PredictedPrice': 3050.54833984375}]
+2025-12-05 09:57:33.151371 - Training new model with: epochs=6, batch_size=32, lr=0.001, optimizer=adam, loss=mse, dropout=0.2
+2025-12-05 09:57:37.300801 - Saving model to /home/joao/pricecast/models/ml/saved_models/b3e2c1b6-e322-4d49-9b8c-fdb9026ed4b0_csv_w8_e6_b32.keras...
+2025-12-05 09:57:37.999494 - Prediction result: [{'Date': '2025-11-25', 'PredictedPrice': 1146.7835693359375}, {'Date': '2025-11-26', 'PredictedPrice': 1244.3922119140625}, {'Date': '2025-11-27', 'PredictedPrice': 1211.3685302734375}, {'Date': '2025-11-28', 'PredictedPrice': 1193.4183349609375}, {'Date': '2025-11-29', 'PredictedPrice': 1077.185546875}, {'Date': '2025-11-30', 'PredictedPrice': 1048.0758056640625}]
+2025-12-05 09:59:45.202423 - Getting elements by part: coin
+2025-12-05 09:59:45.862903 - Updating bit coin
+2025-12-05 09:59:46.414362 - File updated successfully: bit coin
+2025-12-05 09:59:47.545868 - Data available: ['/home/joao/pricecast/scraper/data/Bitcoinprice.csv', '/home/joao/pricecast/scraper/data/0275b6ba-97a3-45f9-a8c4-ed71e600fb36_IronOrePrice.csv', '/home/joao/pricecast/scraper/data/Ethereumprice.csv', '/home/joao/pricecast/scraper/data/30e973d1-dd4d-4e94-8598-25f1c7683976_data.csv', '/home/joao/pricecast/scraper/data/example.csv', '/home/joao/pricecast/scraper/data/b3e2c1b6-e322-4d49-9b8c-fdb9026ed4b0_csv.csv']
+2025-12-05 10:00:04.109714 - Training new model with: epochs=6, batch_size=64, lr=0.001, optimizer=adam, loss=mae, dropout=0.5
+2025-12-05 10:00:15.407790 - Saving model to /home/joao/pricecast/models/ml/saved_models/Bitcoinprice_w8_e6_b64.keras...
+2025-12-05 10:00:16.999769 - Prediction result: [{'Date': '2025-11-29', 'PredictedPrice': 90614.78125}, {'Date': '2025-11-30', 'PredictedPrice': 90581.4140625}, {'Date': '2025-12-01', 'PredictedPrice': 90528.578125}, {'Date': '2025-12-02', 'PredictedPrice': 90462.5703125}, {'Date': '2025-12-03', 'PredictedPrice': 90383.6953125}, {'Date': '2025-12-04', 'PredictedPrice': 90298.078125}]
