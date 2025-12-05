@@ -17,6 +17,11 @@
 
 **PriceCast** is an AI-powered platform that monitors product prices across e-commerce websites, analyzes historical data, and predicts future price trends.  
 It combines **web scraping**, **data processing**, and **machine learning** to help users make smarter purchasing or business decisions.
+<video src="https://github.com/user-attachments/assets/4111091f-437d-4469-abe9-7a2d34c27dfa" 
+       width="600" 
+       controls>
+  Seu navegador não suporta vídeos.
+</video>
 
 ---
 
