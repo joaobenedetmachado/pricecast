@@ -35,10 +35,31 @@ async def data_avaiable():
 
 
 @app.post("/predict")
-async def predict(csv_path: str, days: int, window_size: int, model: str):
+async def predict(
+    csv_path: str, 
+    days: int, 
+    window_size: int, 
+    model: str,
+    epochs: int = 50,
+    batch_size: int = 32,
+    learning_rate: float = 0.001,
+    optimizer: str = 'adam',
+    loss: str = 'mse',
+    dropout: float = 0.2
+):
     try:
         if model == "lstm":
-            result = predict_directive(csv_path, days, window_size)
+            result = predict_directive(
+                csv_path, 
+                days, 
+                window_size,
+                epochs=epochs,
+                batch_size=batch_size,
+                learning_rate=learning_rate,
+                optimizer=optimizer,
+                loss=loss,
+                dropout=dropout
+            )
             log("Prediction result: " + str(result))
             return JSONResponse({"result": result}, status_code=200)
         else:

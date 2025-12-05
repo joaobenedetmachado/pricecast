@@ -39,6 +39,15 @@ export default function MainPage() {
     const [coinName, setCoinName] = useState('')
     const [coinPart, setCoinPart] = useState('')
 
+    // Advanced training parameters
+    const [showAdvanced, setShowAdvanced] = useState(false)
+    const [epochs, setEpochs] = useState(50)
+    const [batchSize, setBatchSize] = useState(32)
+    const [learningRate, setLearningRate] = useState(0.001)
+    const [optimizer, setOptimizer] = useState('adam')
+    const [loss, setLoss] = useState('mse')
+    const [dropout, setDropout] = useState(0.2)
+
     // Load available data files on mount
     useEffect(() => {
         loadDataFiles()
@@ -67,7 +76,17 @@ export default function MainPage() {
 
         try {
             setLoading(true)
-            const result = await makePrediction(selectedFile, predictionDays, windowSize, 'lstm')
+
+            const hyperparams = {
+                epochs,
+                batch_size: batchSize,
+                learning_rate: learningRate,
+                optimizer,
+                loss,
+                dropout
+            }
+
+            const result = await makePrediction(selectedFile, predictionDays, windowSize, 'lstm', hyperparams)
             console.log('Prediction API Response:', result)
             console.log('Prediction Result:', result.result)
             setPredictionResult(result.result)
@@ -327,6 +346,100 @@ export default function MainPage() {
                                             </Button>
                                         </div>
                                     </div>
+
+                                    {/* Advanced Settings Toggle */}
+                                    <div className="mt-4 pt-4 border-t border-border">
+                                        <button
+                                            onClick={() => setShowAdvanced(!showAdvanced)}
+                                            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                                        >
+                                            <Activity className="w-4 h-4" />
+                                            Configurações Avançadas de Treinamento
+                                            <span className="text-xs">
+                                                {showAdvanced ? '▼' : '▶'}
+                                            </span>
+                                        </button>
+
+                                        {showAdvanced && (
+                                            <div className="mt-4 grid md:grid-cols-3 gap-4 p-4 bg-muted/30 rounded-lg">
+                                                <div className="space-y-2">
+                                                    <label className="text-xs font-medium">Épocas</label>
+                                                    <Input
+                                                        type="number"
+                                                        value={epochs}
+                                                        onChange={(e) => setEpochs(parseInt(e.target.value))}
+                                                        min="1"
+                                                        max="200"
+                                                        className="h-9"
+                                                    />
+                                                </div>
+
+                                                <div className="space-y-2">
+                                                    <label className="text-xs font-medium">Batch Size</label>
+                                                    <Input
+                                                        type="number"
+                                                        value={batchSize}
+                                                        onChange={(e) => setBatchSize(parseInt(e.target.value))}
+                                                        min="1"
+                                                        max="128"
+                                                        className="h-9"
+                                                    />
+                                                </div>
+
+                                                <div className="space-y-2">
+                                                    <label className="text-xs font-medium">Learning Rate</label>
+                                                    <Input
+                                                        type="number"
+                                                        step="0.0001"
+                                                        value={learningRate}
+                                                        onChange={(e) => setLearningRate(parseFloat(e.target.value))}
+                                                        min="0.0001"
+                                                        max="0.1"
+                                                        className="h-9"
+                                                    />
+                                                </div>
+
+                                                <div className="space-y-2">
+                                                    <label className="text-xs font-medium">Optimizer</label>
+                                                    <Select
+                                                        value={optimizer}
+                                                        onChange={(e) => setOptimizer(e.target.value)}
+                                                        className="h-9"
+                                                    >
+                                                        <option value="adam">Adam</option>
+                                                        <option value="sgd">SGD</option>
+                                                        <option value="rmsprop">RMSprop</option>
+                                                    </Select>
+                                                </div>
+
+                                                <div className="space-y-2">
+                                                    <label className="text-xs font-medium">Loss Function</label>
+                                                    <Select
+                                                        value={loss}
+                                                        onChange={(e) => setLoss(e.target.value)}
+                                                        className="h-9"
+                                                    >
+                                                        <option value="mse">MSE</option>
+                                                        <option value="mae">MAE</option>
+                                                        <option value="huber">Huber</option>
+                                                    </Select>
+                                                </div>
+
+                                                <div className="space-y-2">
+                                                    <label className="text-xs font-medium">Dropout</label>
+                                                    <Input
+                                                        type="number"
+                                                        step="0.05"
+                                                        value={dropout}
+                                                        onChange={(e) => setDropout(parseFloat(e.target.value))}
+                                                        min="0"
+                                                        max="0.9"
+                                                        className="h-9"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </CardContent>
                             </Card>
 
@@ -529,27 +642,27 @@ export default function MainPage() {
                                             <div className="grid grid-cols-2 gap-2 text-xs">
                                                 <div className="p-2 bg-muted rounded">
                                                     <p className="text-[10px] text-muted-foreground mb-0.5">Épocas</p>
-                                                    <p className="font-bold font-mono">50</p>
+                                                    <p className="font-bold font-mono">{epochs}</p>
                                                 </div>
                                                 <div className="p-2 bg-muted rounded">
                                                     <p className="text-[10px] text-muted-foreground mb-0.5">Batch</p>
-                                                    <p className="font-bold font-mono">32</p>
+                                                    <p className="font-bold font-mono">{batchSize}</p>
                                                 </div>
                                                 <div className="p-2 bg-muted rounded">
                                                     <p className="text-[10px] text-muted-foreground mb-0.5">LR</p>
-                                                    <p className="font-bold font-mono">0.001</p>
+                                                    <p className="font-bold font-mono">{learningRate}</p>
                                                 </div>
                                                 <div className="p-2 bg-muted rounded">
                                                     <p className="text-[10px] text-muted-foreground mb-0.5">Optimizer</p>
-                                                    <p className="font-bold font-mono">Adam</p>
+                                                    <p className="font-bold font-mono">{optimizer.toUpperCase()}</p>
                                                 </div>
                                                 <div className="p-2 bg-muted rounded">
                                                     <p className="text-[10px] text-muted-foreground mb-0.5">Loss</p>
-                                                    <p className="font-bold font-mono">MSE</p>
+                                                    <p className="font-bold font-mono">{loss.toUpperCase()}</p>
                                                 </div>
                                                 <div className="p-2 bg-muted rounded">
                                                     <p className="text-[10px] text-muted-foreground mb-0.5">Dropout</p>
-                                                    <p className="font-bold font-mono">0.2</p>
+                                                    <p className="font-bold font-mono">{dropout}</p>
                                                 </div>
                                             </div>
                                         </CardContent>

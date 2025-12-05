@@ -21,16 +21,24 @@ export const getDataAvailable = async () => {
 }
 
 // Make prediction
-export const makePrediction = async (csvPath, days, windowSize, model = 'lstm') => {
+export const makePrediction = async (csvPath, days, windowSize, model = 'lstm', hyperparams = {}) => {
     try {
-        const response = await api.post('/predict', null, {
-            params: {
-                csv_path: csvPath,
-                days: days,
-                window_size: windowSize,
-                model: model,
-            },
-        })
+        const params = {
+            csv_path: csvPath,
+            days: days,
+            window_size: windowSize,
+            model: model,
+        }
+
+        // Add optional hyperparameters if provided
+        if (hyperparams.epochs !== undefined) params.epochs = hyperparams.epochs
+        if (hyperparams.batch_size !== undefined) params.batch_size = hyperparams.batch_size
+        if (hyperparams.learning_rate !== undefined) params.learning_rate = hyperparams.learning_rate
+        if (hyperparams.optimizer !== undefined) params.optimizer = hyperparams.optimizer
+        if (hyperparams.loss !== undefined) params.loss = hyperparams.loss
+        if (hyperparams.dropout !== undefined) params.dropout = hyperparams.dropout
+
+        const response = await api.post('/predict', null, { params })
         return response.data
     } catch (error) {
         console.error('Error making prediction:', error)
