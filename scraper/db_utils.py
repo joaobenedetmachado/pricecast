@@ -45,3 +45,6 @@ def get_elements_by_part(name, part):
     except Exception as e:
         log(f"error getting elements by part: {e}")
         return "error in storage"
+
+def change_db(info):
+    pass
